@@ -16,9 +16,8 @@ import FormsTask3  from './forms/3';
 
 import CommonTask1  from './common/1';
 
-//in codesandbox.io raw.macro can't load source from relative path
-//raw('./lists/1/README.md')
-const basePath = './src/components/lessons/8/';
+
+const basePath = './';
 
 const listsTask1Description = raw(basePath + 'lists/1/README.md');
 const listsTask2Description = raw(basePath + 'lists/2/README.md');

@@ -1,11 +1,40 @@
 import React from 'react';
 import data from './data.json';
+import PropTypes from "prop-types";
 
 const PersonalInfo = ({ data }) => (
   <div className="personalInfo" >
     <pre>{JSON.stringify(data, null, 2)}</pre>
   </div>
 );
+PersonalInfo.propTypes = {
+    data: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        guid: PropTypes.string,
+        isActive: PropTypes.bool,
+        balance: PropTypes.string,
+        picture: PropTypes.string,
+        age: PropTypes.number,
+        name: PropTypes.shape({
+            first: PropTypes.string.isRequired,
+            last: PropTypes.string.isRequired,
+        }),
+        company: PropTypes.string,
+        email: PropTypes.string.isRequired,
+        latitude: PropTypes.string,
+        longitude: PropTypes.string,
+        tags: PropTypes.arrayOf(
+            PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        ),
+        range: PropTypes.arrayOf(PropTypes.number),
+        friends: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.number,
+                name: PropTypes.string,
+            })
+        ),
+    }),
+};
 
 class ShowPersonalInfo extends React.Component {
   state = {selectedCompanyId: 'disabled'}
@@ -17,7 +46,7 @@ class ShowPersonalInfo extends React.Component {
 
   render() {
     const { companies } = this.props;
-    const { selectedCompanyId } = this.state;
+     const { selectedCompanyId } = this.state;
     const companyData = companies.find(i => selectedCompanyId === i._id);
     return (
       <>
@@ -32,7 +61,9 @@ class ShowPersonalInfo extends React.Component {
   }
 }
 
-
+ShowPersonalInfo.propTypes = {
+    companies: PropTypes.array
+};
 
 const Task = () => {
   return (

@@ -8,11 +8,13 @@ const friends = [
   'Doug'
 ];
 
-const List = () => {
+const List = ({friends}) => {
   // Render a list using the "friends" being passed in.
   return (
     <ul>
-
+      {friends.map((friend, idx) => (
+          <li key={idx}>{friend}</li>
+      ))}
     </ul>
   );
 };

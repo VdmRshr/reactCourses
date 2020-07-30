@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from "prop-types";
+
 
 const Row = styled.li`
   display: flex;
@@ -39,37 +41,59 @@ const ArchivedLabel = styled(Label)`
 
 const byArchived = archivedItems => item => !archivedItems.includes(item.id);
 
-const List = ({ className, list }) => {
-  const [archivedItems, setArchivedItems] = React.useState([]);
+const List = ({className, list}) => {
+    const [archivedItems, setArchivedItems] = React.useState(JSON.parse(localStorage.getItem('archived')));
+    console.log(typeof list)
+    const handleArchive = id => {
+        if (localStorage.getItem('archived') === null) {
+            let archivedItems = [];
+            archivedItems.push(id);
+            localStorage.setItem('archived', JSON.stringify(archivedItems));
+        } else {
+            let archivedItems = JSON.parse(localStorage.getItem('archived'));
+            archivedItems.push(id);
+            localStorage.setItem('archived', JSON.stringify(archivedItems));
+        }
+        setArchivedItems(JSON.parse(localStorage.getItem('archived')));
 
-  const handleArchive = id => {
-    setArchivedItems(archivedItems => [...archivedItems, id]);
-  };
+    };
 
-  return (
-    <React.Fragment>
-      <Container className={className}>
-        {list.filter(byArchived(archivedItems)).map(item => (
-          <Row key={item.id}>
-            <Label>{item.name}</Label>
-            <Button type="button" onClick={() => handleArchive(item.id)}>
-              Archive
-            </Button>
-          </Row>
-        ))}
-      </Container>
-      <ArchivedLabel>
-        {archivedItems.length} item{archivedItems.length === 1 ? "" : "s"}{" "}
-        archived...
-      </ArchivedLabel>
-      {archivedItems.length > 0 && (
-        <ResetButton onClick={() => setArchivedItems([])}>
-          Reset Archived
-        </ResetButton>
-      )}
-    </React.Fragment>
-  );
+    const resetArchive = () => {
+        localStorage.setItem('archived', JSON.stringify([]));
+        setArchivedItems([])
+    }
+
+    return (
+        <React.Fragment>
+            <Container className={className}>
+                {list.filter(byArchived(archivedItems)).map(item => (
+                    <Row key={item.id}>
+                        <Label>{item.name}</Label>
+                        <Button type="button" onClick={() => handleArchive(item.id)}>
+                            Archive
+                        </Button>
+                    </Row>
+                ))}
+            </Container>
+            <ArchivedLabel>
+                {archivedItems.length} item{archivedItems.length === 1 ? "" : "s"}{" "}
+                archived...
+            </ArchivedLabel>
+            {archivedItems.length > 0 && (
+                <ResetButton onClick={() => resetArchive()}>
+                    Reset Archived
+                </ResetButton>
+            )}
+        </React.Fragment>
+    );
 };
 
-export { List };
+List.propTypes = {
+    className: PropTypes.string,
+    list: PropTypes.array.isRequired,
+    archivedItems: PropTypes.array.isRequired,
+    setArchivedItems: PropTypes.func.isRequired,
+};
+
+export {List};
 export default List;

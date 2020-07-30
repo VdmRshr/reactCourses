@@ -9,7 +9,7 @@ import lesson8 from '../../data/lesson8.json';
 import lesson9 from '../../data/lesson9.json';
 import lessonsTasks from '../lessons';
 
-const lessons = [lesson8/*, lesson9*/];
+const lessons = [lesson8, lesson9];
 
 const renderTopics = (topics, lessonName) => {
   return (

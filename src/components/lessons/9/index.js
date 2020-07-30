@@ -12,7 +12,7 @@ import FragmentsTask1 from './fragments/1';
 import FragmentsTask2 from './fragments/2';
 
 
-const basePath = './src/components/lessons/9/';
+const basePath = './';
 
 const liftingStateUpTask1Description = getDescriptionComponent(raw(basePath + 'liftingStateUp/1/README.md'));
 const liftingStateUpTask2Description = getDescriptionComponent(raw(basePath + 'liftingStateUp/2/README.md'));
